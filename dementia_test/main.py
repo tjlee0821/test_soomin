@@ -44,19 +44,13 @@ def btnpress():                   # 함수 btnpress() 정의
     lb.config(text=a)
     
 def btnpress1():                   # 함수 btnpress() 정의
-    a = []
+    b = []
     if chkvar.get() == 0:         # 체크박스가 체크 되었는지 확인
-        a.append("Only English Version Support\nSorry")
-    if chkvar1.get() == 1:
-        a.append("Mammals")
-    if chkvar1.get() == 0:
-        a.append("Reptiles")
-    if chkvar2.get() == 1:
-        a.append("Text Only")
-    if chkvar2.get() == 0:
-        a.append("Text with Sound")
-    a.append("Selected")
-    lb.config(text=a)           
+        b.append("Only English Version Support\nSorry")
+        lb1.config(text=b)
+        
+        
+               
         
 def game_over():
     print('def game_over')
@@ -147,10 +141,12 @@ lb.pack()       # 레이블 배치
 
 btn1 = Button(root)                # root라는 창에 버튼 생성
 btn1.config(text= "Run Dementia Test")          # 버튼 내용 
-btn1.config(width=10)              # 버튼 크기
+btn1.config(width=20)              # 버튼 크기
 btn1.config(command=btnpress1)      # 버튼 기능 (btnpree() 함수 호출)
 btn1.pack()                        # 버튼 배치
 
+lb1 = Label(root)                 # root라는 창에 레이블 생성
+lb1.pack() 
 
 root.mainloop()   
 
