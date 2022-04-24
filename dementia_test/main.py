@@ -31,12 +31,31 @@ def draw():
 def btnpress():                   # 함수 btnpress() 정의
     a = []
     if chkvar.get() == 1:         # 체크박스가 체크 되었는지 확인
-        a.append("Python")
+        a.append("English")
     if chkvar1.get() == 1:
-        a.append("C")
+        a.append("Mammals")
+    if chkvar1.get() == 0:
+        a.append("Reptiles")
     if chkvar2.get() == 1:
-        a.append("Java")
-    a.append("선택되었습니다.")
+        a.append("Text Only")
+    if chkvar2.get() == 0:
+        a.append("Text with Sound")
+    a.append("Selected")
+    lb.config(text=a)
+    
+def btnpress1():                   # 함수 btnpress() 정의
+    a = []
+    if chkvar.get() == 0:         # 체크박스가 체크 되었는지 확인
+        a.append("Only English Version Support\nSorry")
+    if chkvar1.get() == 1:
+        a.append("Mammals")
+    if chkvar1.get() == 0:
+        a.append("Reptiles")
+    if chkvar2.get() == 1:
+        a.append("Text Only")
+    if chkvar2.get() == 0:
+        a.append("Text with Sound")
+    a.append("Selected")
     lb.config(text=a)           
         
 def game_over():
@@ -98,32 +117,41 @@ infoBox  = cv2.rectangle(img, (100, 100), (300, 250), dimgrey, -1)
 
 root = Tk()                      # root라는 창을 생성
 root.geometry("600x400")       # 창 크기설정
-root.title("yeachan_yeachan")    # 창 제목설정
-root.option_add("*Font","맑은고딕 25") # 폰트설정
+root.title("dementia_test")    # 창 제목설정
+root.option_add("*Font","sans-serif 25") # 폰트설정
 root.resizable(False, False) 
     
 chkvar = IntVar()                             # chkvar에 int 형으로 값을 저장
 chkbox = Checkbutton(root, variable=chkvar)   # root라는 창에 체크박스 생성
-chkbox.config(text="Python")                  # 체크박스 내용 설정
+chkbox.config(text="English")                  # 체크박스 내용 설정
 chkbox.pack()                                 # 체크박스 배치
 
 chkvar1 = IntVar()                            # chkvar1에 int 형으로 값을 저장
 chkbox1 = Checkbutton(root, variable=chkvar1) # root라는 창에 체크박스 생성
-chkbox1.config(text="C")                      # 체크박스 내용 설정
+chkbox1.config(text="Mammals")                      # 체크박스 내용 설정
 chkbox1.pack()                                # 체크박스 배치
 
 chkvar2 = IntVar()                            # chkvar2 에 int 형으로 값을 저장
 chkbox2 = Checkbutton(root, variable=chkvar2) # root라는 창에 체크박스 생성
-chkbox2.config(text="Java")                   # 체크박스 내용 설정
+chkbox2.config(text="Text Only")                   # 체크박스 내용 설정
 chkbox2.pack()                                # 체크박스 배치
     
 btn = Button(root)                # root라는 창에 버튼 생성
-btn.config(text= "선택")          # 버튼 내용 
+btn.config(text= "Select")          # 버튼 내용 
 btn.config(width=10)              # 버튼 크기
 btn.config(command=btnpress)      # 버튼 기능 (btnpree() 함수 호출)
 btn.pack()                        # 버튼 배치
 
 lb = Label(root)                 # root라는 창에 레이블 생성
-lb.pack()                        # 레이블 배치
+lb.pack()       # 레이블 배치
+
+btn1 = Button(root)                # root라는 창에 버튼 생성
+btn1.config(text= "Run Dementia Test")          # 버튼 내용 
+btn1.config(width=10)              # 버튼 크기
+btn1.config(command=btnpress1)      # 버튼 기능 (btnpree() 함수 호출)
+btn1.pack()                        # 버튼 배치
+
 
 root.mainloop()   
+
+
