@@ -1,6 +1,8 @@
 import random
 import tkinter as tk
 from tkinter import *
+import time 
+import threading
 
 global changer
 changer = False
@@ -63,32 +65,58 @@ def ShowQuestionAndAnswer(itx): #잘 만들어졌는지 확인해본다
 
 ###=============================###
 
-def DarkenLabel():
+def ChangeSpecies():
     if chkvar1.get() == 1:
         label.config(bg="gray")
         setTargetList(True)
     if chkvar1.get() == 0:
         label.config(bg="white")
         setTargetList(False)
-###============================###
 
+###============================###
+def print_Question(qests):
+    #qLb.config(text=qests)
+    print(qests)
+    threading.Timer(2.5, print_Question).start()
+
+###============================###
+def showQuestion(itx):
+    (right_List,answer_List) = BuildQuestionAndAnswerList(itx)
+    for sName, sColor, sLogic in right_List:
+        print_Question(sName)   
+#    for sName, sColor, sLogic in right_List:
+#        qLb.config(text=sName)
+#        qLb.config(gb=sColor)
+        
+
+###============================###
 def testStart():   
-    DarkenLabel()
-    print("Start")                # 버튼 배치
-###============================###
+    ChangeSpecies()
+    print(target_list)
+    print("Start")
+    showQuestion(6)# 버튼 배치
+    
 
+
+###============================###
 
 root = tk.Tk()
 root.title("dementia_test")   
 root.wm_geometry(screenSize)
 
-label = Label(root, bg="white", pady=5, font=(None, 1), height=20, width=720)
+label = Label(root)
+label.config(bg="white")
+label.config(pady=5)
+label.config(font=(None, 1))
+label.config(height=20)
+label.config(width=720)
+
 chkvar1 = IntVar()
-checkbox = Checkbutton(root,  command=DarkenLabel, variable=chkvar1)
+checkbox = Checkbutton(root)
 checkbox.config(bg="white")
 checkbox.config(text="Mammals")
-#checkbox.grid(row=0, column=0, sticky="w")
-#label.grid(row=0, column=0, sticky="ew")
+checkbox.config(command=ChangeSpecies)
+checkbox.config(variable=chkvar1)
 checkbox.pack()
 label.pack()
 
@@ -96,7 +124,10 @@ btn = Button(root)
 btn.config(text= "Start Dementia Test")           
 btn.config(width=20)              
 btn.config(command=testStart)      
-btn.pack()                        
+btn.pack()            
+
+qLb = Label(root)
+qLb.pack()            
 
 root.mainloop()
     
