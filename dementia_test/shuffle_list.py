@@ -25,13 +25,11 @@ MaxQuestionLength = min(list_length_mammals, list_length_reptiles)
 def setTargetList(str):
     if str == True: 
         target_list.extend(mammals)
-        print(target_list)
     if str == False: 
         target_list.extend(reptiles)    
-        list_length = len(target_list)
-        list_length_colors = len(colors)
-        print(target_list)
-    print("^^^")
+    
+    list_length = len(target_list)
+    list_length_colors = len(colors)
 
 def BuildQuestionAndAnswerList(itx):
     rRightList = random.sample(target_list,itx)
@@ -72,7 +70,13 @@ def DarkenLabel():
     if chkvar1.get() == 0:
         label.config(bg="white")
         setTargetList(False)
-    
+###============================###
+
+def testStart():   
+    DarkenLabel()
+    print("Start")                # 버튼 배치
+###============================###
+
 
 root = tk.Tk()
 root.title("dementia_test")   
@@ -80,15 +84,19 @@ root.wm_geometry(screenSize)
 
 label = Label(root, bg="white", pady=5, font=(None, 1), height=20, width=720)
 chkvar1 = IntVar()
-checkbox = Checkbutton(root, bg="white", command=DarkenLabel, variable=chkvar1)
+checkbox = Checkbutton(root,  command=DarkenLabel, variable=chkvar1)
+checkbox.config(bg="white")
 checkbox.config(text="Mammals")
-checkbox.grid(row=0, column=0, sticky="w")
-label.grid(row=0, column=0, sticky="ew")
-#chkvar1 = IntVar()                            # chkvar1에 int 형으로 값을 저장
-#chkbox1 = Checkbutton(root, variable=chkvar1, command=DarkenLabel) # root라는 창에 체크박스 생성
-#chkbox1.config(text="Mammals")                      # 체크박스 내용 설정
-#chkbox1.pack()
+#checkbox.grid(row=0, column=0, sticky="w")
+#label.grid(row=0, column=0, sticky="ew")
+checkbox.pack()
+label.pack()
 
+btn = Button(root)                
+btn.config(text= "Start Dementia Test")           
+btn.config(width=20)              
+btn.config(command=testStart)      
+btn.pack()                        
 
 root.mainloop()
     
