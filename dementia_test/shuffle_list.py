@@ -74,19 +74,19 @@ def ChangeSpecies():
         setTargetList(False)
 
 ###============================###
-def print_Question(qests):
-    #qLb.config(text=qests)
-    print(qests)
-    threading.Timer(2.5, print_Question).start()
 
+def print_Question(qests,clrs):
+    qLb.config(text=qests)
+    qLb.config(bg=clrs)
+    print(qests)
+    print(clrs)
+    
 ###============================###
 def showQuestion(itx):
     (right_List,answer_List) = BuildQuestionAndAnswerList(itx)
     for sName, sColor, sLogic in right_List:
-        print_Question(sName)   
-#    for sName, sColor, sLogic in right_List:
-#        qLb.config(text=sName)
-#        qLb.config(gb=sColor)
+        print_Question(sName, sColor)   
+        time.sleep(1)
         
 
 ###============================###
@@ -127,6 +127,9 @@ btn.config(command=testStart)
 btn.pack()            
 
 qLb = Label(root)
+qLb.config(height=50)
+qLb.config(width=720)
+qLb.config(bg='blue')
 qLb.pack()            
 
 root.mainloop()
