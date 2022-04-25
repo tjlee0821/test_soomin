@@ -10,6 +10,9 @@ class Page(tk.Frame):
         self.lift()
 
 class Page1(Page):
+    
+    target_list= ['aa','bb','cc']
+        
     def __init__(self, *args, **kwargs):
         Page.__init__(self, *args, **kwargs)
         label = tk.Label(self, text="This is page 1")
@@ -20,23 +23,7 @@ class Page1(Page):
         backgroundImage=tk.Label(self, image=img)
         backgroundImage.image = img
         backgroundImage.pack(side="top", fill="both", expand=True)
-        
-        global mammals
-        mammals = ['Bat', 'Bear', 'Beaver', 'Cat', 'Cow', 'Coyote', 'Deer', 'Dog', 'Dolphin', 'Elephant', 'Fox', 'Gibbon', 'Giraffe', 'Goat', 'Goat', 'Gopher', 'Hedgehog', 'Hippopotamus', 'Horse', 'Horse', 'Jaguar', 'Kangaroo', 'Koala', 'Leopard', 'Lion', 'Llama', 'Lynx', 'Mole', 'Monkey', 'Mouse', 'Narwhal', 'Orangutan', 'Orca', 'Otter', 'Ox', 'Panda', 'Pig', 'Polar bear', 'Puma', 'Rabbit', 'Raccoon', 'Rat', 'Rhinoceros', 'Sheep', 'Squirrel', 'Tiger', 'Walrus', 'Weasel', 'Wolf', 'Zebra']
-        global reptiles
-        reptiles = ['aa']
-        global target_list
-        target_list= []
-        
-        value = "abc"
-        
-        def testTarget_Language():
-            if chkvar == 1: return True
-        
-        def testTarget_Sounds():
-            if chkvar2 == 1: return False
-            if chkvar2 == 0: return True
-            
+    
         global chkvar
         global chkvar1
         global chkvar2
@@ -63,10 +50,8 @@ class Page1(Page):
                 a.append("English")
             if chkvar1.get() == 1:
                 a.append("Mammals")
-                target_list.extend(random.shuffle(mammals))
             if chkvar1.get() == 0:
                 a.append("Reptiles")
-                target_list.extend(random.shuffle(reptiles))
             if chkvar2.get() == 1:
                 a.append("Text Only")
             if chkvar2.get() == 0:
@@ -79,6 +64,10 @@ class Page1(Page):
         btn.config(width=20)              # 버튼 크기
         btn.config(command=btnpress)      # 버튼 기능 (btnpree() 함수 호출)
         btn.pack()
+        
+    def getTargetList(self):
+        random.shuffle(self.target_list)
+            
        
        
 
@@ -115,8 +104,7 @@ class Page2(Page):
         questionBox = canvas.create_rectangle(350,100,1100,250, fill='dimgrey')
         infoBox = canvas.create_rectangle(100,100,300,250, fill='dimgrey')
         
-        print(Page1.value)
-             
+       
             
             
         
@@ -159,6 +147,18 @@ if __name__ == "__main__":
     main = MainView(root)
     main.pack(side="top", fill="both", expand=True)
     screenSize = str(width)+'x'+str(height) # page 2 global variable width, height
+    
+
+    global mammals
+    mammals = ['Bat', 'Bear', 'Beaver', 'Cat', 'Cow', 'Coyote', 'Deer', 'Dog', 'Dolphin', 'Elephant', 'Fox', 'Gibbon', 'Giraffe', 'Goat', 'Goat', 'Gopher', 'Hedgehog', 'Hippopotamus', 'Horse', 'Horse', 'Jaguar', 'Kangaroo', 'Koala', 'Leopard', 'Lion', 'Llama', 'Lynx', 'Mole', 'Monkey', 'Mouse', 'Narwhal', 'Orangutan', 'Orca', 'Otter', 'Ox', 'Panda', 'Pig', 'Polar bear', 'Puma', 'Rabbit', 'Raccoon', 'Rat', 'Rhinoceros', 'Sheep', 'Squirrel', 'Tiger', 'Walrus', 'Weasel', 'Wolf', 'Zebra']
+    global reptiles
+    reptiles = ['aa']
+    
+    t = Page1()
+    a = t.getTargetList()
+    print(a)
+
+
     root.wm_geometry(screenSize)
     root.title("dementia_test")   
     root.mainloop()
