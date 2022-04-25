@@ -44,15 +44,16 @@ def BuildQuestionAndAnswerList(itx):
     for i in range(0,itx):#수만큼 true 를 넣어준다.
         rRightLogic.append(True)
 
+    rWrongLogic = []
     rWrongList = random.sample(target_list,1)
     rWrongColors = random.sample(colors,1)
-    rWrongLogic = [False]
+    rWrongLogic.append(False)
 
     right_List = list(zip(rRightList,rRightColors,rRightLogic))
     wrong_List = list(zip(rWrongList,rWrongColors,rWrongLogic))
 
     answer_List = random.sample(right_List,3)
-    answer_List.append(wrong_List)
+    answer_List.extend(wrong_List)
     random.shuffle(answer_List)
     
     right_List_dict = dict()
@@ -74,7 +75,10 @@ def showQuestionAndAnswer(itx): #잘 만들어졌는지 확인해본다
     d = dict()
     d = right_List_dict
     
-    update_question(d,1,itx)  
+    ans = dict()
+    ans = answer_List_dict
+    
+    update_question(d,1,itx,ans)  
 
 ###=============================###
 
@@ -155,14 +159,68 @@ def update_status():
 
 question_Label = tk.Label(root, text="QUESTIONS")
 question_Label.pack()
+question_Label.config(width="30")
+question_Label.config(height="5")
+question_Label.config(font=("Arial",50))
 
-def update_question(Qset, Qnum, itx):
+def update_question(Qset, Qnum, itx, ans ):
     (questionName, colors, Logic) = Qset.get(Qnum)
     print(questionName)
     question_Label.config(text = questionName)
+    question_Label.config(bg = colors)
     Qnum = Qnum + 1
-    id = root.after(2500, update_question, Qset, Qnum, itx)
-    if Qnum > itx : root.after_cancel(id) # cancel loop
+    id = root.after(500, update_question, Qset, Qnum, itx, ans)
+    if Qnum > itx : 
+        root.after_cancel(id)
+        question_Label.config(text = 'Click~!')
+        question_Label.config(bg = 'white')
+        showChoices(ans)
+
+def showChoices(ans):
+    print(ans)
+    (a1, c1, k1) = ans.get(1)
+    (a2, c2, k2) = ans.get(2)
+    (a3, c3, k3) = ans.get(3)
+    (a4, c4, k4) = ans.get(4)
+    
+    print(c1)
+    a1Btn.config(text=a1)
+    a1Btn.config(bg=c1)
+    a2Btn.config(text=a2)
+    a2Btn.config(bg=c2)
+    a3Btn.config(text=a3)
+    a3Btn.config(bg=c3)
+    a4Btn.config(text=a4)
+    a4Btn.config(bg=c4)    
+
+
+
+
+a1Btn = Button(root, text="answer1")
+a1Btn.pack()
+a1Btn.config(width="15")
+a1Btn.config(height="2")
+a1Btn.config(font=("Arial",25))
+
+a2Btn = Button(root, text="answer2")
+a2Btn.pack()
+a2Btn.config(width="15")
+a2Btn.config(height="2")
+a2Btn.config(font=("Arial",25))
+
+a3Btn = Button(root, text="answer3")
+a3Btn.pack()
+a3Btn.config(width="15")
+a3Btn.config(height="2")
+a3Btn.config(font=("Arial",25))
+
+a4Btn = Button(root, text="answer4")
+a4Btn.pack()
+a4Btn.config(width="15")
+a4Btn.config(height="2")
+a4Btn.config(font=("Arial",25))
+
+
 
 root.mainloop()
     
