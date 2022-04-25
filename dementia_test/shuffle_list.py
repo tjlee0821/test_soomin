@@ -2,7 +2,6 @@ import random
 import tkinter as tk
 from tkinter import *
 import time 
-import threading
 
 global changer
 changer = False
@@ -64,6 +63,7 @@ def BuildQuestionAndAnswerList(itx):
     return right_List_dict, answer_List_dict
 
 def showQuestionAndAnswer(itx): #잘 만들어졌는지 확인해본다
+    
     right_List_dict = dict()
     answer_List_dict = dict()
     (right_List_dict,answer_List_dict) = BuildQuestionAndAnswerList(itx)
@@ -71,9 +71,10 @@ def showQuestionAndAnswer(itx): #잘 만들어졌는지 확인해본다
     print("Question :",right_List_dict)
     print("Answer :",answer_List_dict)
     
-    qestion_1 = right_List_dict.get(1)
-    print(qestion_1)        
+    d = dict()
+    d = right_List_dict
     
+    update_question(d,1,itx)  
 
 ###=============================###
 
@@ -134,14 +135,7 @@ btn.config(text= "Start Dementia Test")
 btn.config(width=20)              
 btn.config(command=testStart)      
 btn.pack()            
-
-#qLb = Label(root)
-#qLb.config(height=50)
-#qLb.config(width=720)
-#qLb.config(bg='blue')
-#qLb.pack()            
-
-
+     
 status = tk.Label(root, text="Working")
 status.pack()
 
@@ -159,6 +153,16 @@ def update_status():
 # Launch the status message after 1 millisecond (when the window is loaded)
 #root.after(1, update_status)
 
+question_Label = tk.Label(root, text="QUESTIONS")
+question_Label.pack()
+
+def update_question(Qset, Qnum, itx):
+    (questionName, colors, Logic) = Qset.get(Qnum)
+    print(questionName)
+    question_Label.config(text = questionName)
+    Qnum = Qnum + 1
+    id = root.after(2500, update_question, Qset, Qnum, itx)
+    if Qnum > itx : root.after_cancel(id) # cancel loop
 
 root.mainloop()
     
