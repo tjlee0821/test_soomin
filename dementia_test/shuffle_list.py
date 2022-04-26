@@ -1,10 +1,19 @@
 import random
+import string
 import tkinter as tk
 from tkinter import *
 import time 
 
-global changer
+global changer # 종 바꾸기
 changer = False
+
+global trialLeft #Total Trial
+trialLeft = 3     
+
+global NextQuestionLength # the least length
+NextQuestionLength = 6 
+
+
 screenSize = "1280x1024"
 
 
@@ -105,13 +114,25 @@ def print_Question(qests,clrs, lgc):
 
 ###============================###
 def testStart():   
+    global NextQuestionLength
     ChangeSpecies()
     print(target_list)
     print("Start")
-    showQuestionAndAnswer(6)
+    showQuestionAndAnswer(NextQuestionLength)
     # 버튼 배치
-    #root.after(10, update_status)
+    #update_status('testing')
+def nullCommand():
+    print("nullcommand")
     
+def beReadyForTest():
+    a1Btn.config(text="answer1")
+    a2Btn.config(text="answer2")
+    a3Btn.config(text="answer3")
+    a4Btn.config(text="answer4")
+    a1Btn.config(command=nullCommand)
+    a2Btn.config(command=nullCommand)
+    a3Btn.config(command=nullCommand)
+    a4Btn.config(command=nullCommand)    
 ###============================###
 
 root = tk.Tk()
@@ -139,21 +160,18 @@ btn.config(text= "Start Dementia Test")
 btn.config(width=20)              
 btn.config(command=testStart)      
 btn.pack()            
-     
-status = tk.Label(root, text="Working")
+   
+## ===================================##
+  
+status = tk.Label(root, text="status")
 status.pack()
 
-def update_status():
-    # Get the current message
+def update_status(doWhat):
     current_status = status["text"]
-    # If the message is "Working...", start over with "Working"
-    if current_status.endswith("..."): current_status = "Working"
-    # If not, then just add a "." on the end
+    if current_status.endswith("..."): current_status = doWhat
     else: current_status += "."
-    # Update the message
     status.config(text = current_status)
-    # After 1 second, update the status
-    root.after(1000, update_status)
+    statud_id=root.after(1000, update_status, doWhat)
 # Launch the status message after 1 millisecond (when the window is loaded)
 #root.after(1, update_status)
 
@@ -162,6 +180,8 @@ question_Label.pack()
 question_Label.config(width="30")
 question_Label.config(height="5")
 question_Label.config(font=("Arial",50))
+
+## ===================================##
 
 def update_question(Qset, Qnum, itx, ans ):
     (questionName, colors, Logic) = Qset.get(Qnum)
@@ -176,6 +196,50 @@ def update_question(Qset, Qnum, itx, ans ):
         question_Label.config(bg = 'white')
         showChoices(ans)
 
+## ===================================##
+def goFuther():
+    global NextQuestionLength
+    NextQuestionLength = NextQuestionLength + 1
+    testStart()
+    print('new test')
+   
+def stop_test():
+    global NextQuestionLength
+    out = 'Stop Stop: ' + str(NextQuestionLength) + ''
+    #stopToGo.config(text = out)
+    print('stopped')
+    
+
+def checkWhetherGoOrStop():
+    beReadyForTest() # set initialization
+    global trialLeft
+    if trialLeft > 0: goFuther()
+    if trialLeft == 0: stop_test()
+    
+def decreaseTrialNumber():
+    global trialLeft
+    trialLeft = trialLeft - 1    
+    out = 'Wrong ' + str(trialLeft) + ' Left '
+    stopToGo.config(text = out)
+    
+def wrongAnswer():
+    decreaseTrialNumber()
+    checkWhetherGoOrStop()
+    
+def rightAnswer():
+    stopToGo.config(text = 'Correct')
+    checkWhetherGoOrStop()
+    
+
+stopToGo = Label(root, text="aa")
+stopToGo.pack()
+stopToGo.config(width="20")
+stopToGo.config(height="2")
+stopToGo.config(font=("Arial",25))
+
+## ===================================##
+
+## ===================================##
 def showChoices(ans):
     print(ans)
     (a1, c1, k1) = ans.get(1)
@@ -183,15 +247,23 @@ def showChoices(ans):
     (a3, c3, k3) = ans.get(3)
     (a4, c4, k4) = ans.get(4)
     
-    print(c1)
+    #mac 에서 버튼이 이상하게 작용한다.        
     a1Btn.config(text=a1)
-    a1Btn.config(bg=c1)
+    a1Btn.config(highlightbackground=c1,bg = c1)
+    if k1==True : a1Btn.config(command = wrongAnswer)
+    if k1==False : a1Btn.config(command = rightAnswer)
     a2Btn.config(text=a2)
-    a2Btn.config(bg=c2)
+    a2Btn.config(highlightbackground=c2,bg = c2)
+    if k2==True : a2Btn.config(command = wrongAnswer)
+    if k2==False : a2Btn.config(command = rightAnswer)
     a3Btn.config(text=a3)
-    a3Btn.config(bg=c3)
+    a3Btn.config(highlightbackground=c3,bg = c3)
+    if k3==True : a3Btn.config(command = wrongAnswer)
+    if k3==False : a3Btn.config(command = rightAnswer)
     a4Btn.config(text=a4)
-    a4Btn.config(bg=c4)    
+    a4Btn.config(highlightbackground=c4,bg = c4)    
+    if k4==True : a4Btn.config(command = wrongAnswer)
+    if k4==False : a4Btn.config(command = rightAnswer)
 
 
 
@@ -200,6 +272,7 @@ a1Btn = Button(root, text="answer1")
 a1Btn.pack()
 a1Btn.config(width="15")
 a1Btn.config(height="2")
+#a1Btn.config(padx=10,pady=10)
 a1Btn.config(font=("Arial",25))
 
 a2Btn = Button(root, text="answer2")
@@ -220,7 +293,27 @@ a4Btn.config(width="15")
 a4Btn.config(height="2")
 a4Btn.config(font=("Arial",25))
 
+## ===================================##
 
+
+
+
+## ===================================##
+
+def openNewWindow():
+    result_popup = Toplevel(root)
+    result_popup.title("Result")
+    result_popup.geometry("400x400")
+    pLable = Label(result_popup)
+    pLable.config(text ="This is a new window")
+    pLable.pack()
+    #새창 결과
+btn_result = Button(root, text ="Click to open a new window")
+btn_result.config(command = openNewWindow)
+
+## ===================================##
+
+btn_result.pack()
 
 root.mainloop()
     
