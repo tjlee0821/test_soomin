@@ -160,13 +160,16 @@ label.pack()
 
 btn = Button(root)                
 btn.config(text= "Start Dementia Test")           
-btn.config(width=20)              
-btn.config(command=testStart)      
+btn.config(width=30)
+btn.config(height=2)              
+btn.config(command=testStart)  
+btn.config(cursor='hand2')
+btn.config(font=("Arial",25))    
 btn.pack()            
    
 ## ===================================##
   
-status = tk.Label(root, text="status")
+status = tk.Label(root, text="ready")
 status.pack()
 
 def update_status(doWhat):
@@ -192,7 +195,7 @@ def update_question(Qset, Qnum, itx, ans ):
     question_Label.config(text = questionName)
     question_Label.config(bg = colors)
     Qnum = Qnum + 1
-    id = root.after(500, update_question, Qset, Qnum, itx, ans)
+    id = root.after(1500, update_question, Qset, Qnum, itx, ans)
     if Qnum > itx : 
         root.after_cancel(id)
         question_Label.config(text = 'Click~!')
@@ -200,6 +203,11 @@ def update_question(Qset, Qnum, itx, ans ):
         showChoices(ans)
 
 ## ===================================##
+def resetAll():
+    global NextQuestionLength
+    NextQuestionLength = 6
+    stopToGo.config(text = 'ready')
+
 def goFuther():
     global NextQuestionLength
     NextQuestionLength = NextQuestionLength + 1
@@ -209,15 +217,17 @@ def goFuther():
 def stop_test():
     global NextQuestionLength
     out = 'Stop Stop: ' + str(NextQuestionLength) + ''
-    #stopToGo.config(text = out)
-    print('stopped')
+    stopToGo.config(text = out) # reset level
+    update_status('')
+    openNewWindow(NextQuestionLength)
+    #print('stopped')
     
 
 def checkWhetherGoOrStop():
     beReadyForTest() # set initialization
     global trialLeft
     if trialLeft > 0: goFuther()
-   # if trialLeft == 0: stop_test()
+    if trialLeft == 0: stop_test()
     
 def decreaseTrialNumber():
     global trialLeft
@@ -236,9 +246,9 @@ def rightAnswer():
     checkWhetherGoOrStop()
     
 
-stopToGo = Label(root, text="aa")
+stopToGo = Label(root, text="Please, Click which is NOT displayed")
 stopToGo.pack()
-stopToGo.config(width="20")
+stopToGo.config(width="30")
 stopToGo.config(height="2")
 stopToGo.config(font=("Arial",25))
 
@@ -279,25 +289,26 @@ a1Btn.config(width="15")
 a1Btn.config(height="2")
 #a1Btn.config(padx=10,pady=10)
 a1Btn.config(font=("Arial",25))
+a1Btn.config(cursor='hand2')
 
 a2Btn = Button(root, text="answer2")
 a2Btn.pack()
 a2Btn.config(width="15")
 a2Btn.config(height="2")
 a2Btn.config(font=("Arial",25))
-
+a2Btn.config(cursor='hand2')
 a3Btn = Button(root, text="answer3")
 a3Btn.pack()
 a3Btn.config(width="15")
 a3Btn.config(height="2")
 a3Btn.config(font=("Arial",25))
-
+a3Btn.config(cursor='hand2')
 a4Btn = Button(root, text="answer4")
 a4Btn.pack()
 a4Btn.config(width="15")
 a4Btn.config(height="2")
 a4Btn.config(font=("Arial",25))
-
+a4Btn.config(cursor='hand2')
 ## ===================================##
 
 
@@ -305,20 +316,19 @@ a4Btn.config(font=("Arial",25))
 
 ## ===================================##
 
-def openNewWindow():
+def openNewWindow(level_str):
     result_popup = Toplevel(root)
     result_popup.title("Result")
     result_popup.geometry("400x400")
     pLable = Label(result_popup)
-    pLable.config(text ="This is a new window")
+    pLable.config(text =level_str)
     pLable.pack()
-    #새창 결과
-btn_result = Button(root, text ="Click to open a new window")
-btn_result.config(command = openNewWindow)
+#btn_result = Button(root, text ="Click to open a new window")
+#btn_result.config(command = openNewWindow)
 
 ## ===================================##
 
-btn_result.pack()
+#btn_result.pack()
 
 root.mainloop()
     
