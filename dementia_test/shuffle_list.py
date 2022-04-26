@@ -25,7 +25,7 @@ reptiles = ['adder', 'alligator', 'anaconda', 'angonoka', 'anole', 'asp', 'basil
 
 mammals = ['Bat', 'Bear', 'Beaver', 'Cat', 'Cow', 'Coyote', 'Deer', 'Dog', 'Dolphin', 'Elephant', 'Fox', 'Gibbon', 'Giraffe', 'Goat', 'Goat', 'Gopher', 'Hedgehog', 'Hippopotamus', 'Horse', 'Horse', 'Jaguar', 'Kangaroo', 'Koala', 'Leopard', 'Lion', 'Llama', 'Lynx', 'Mole', 'Monkey', 'Mouse', 'Narwhal', 'Orangutan', 'Orca', 'Otter', 'Ox', 'Panda', 'Pig', 'Polar bear', 'Puma', 'Rabbit', 'Raccoon', 'Rat', 'Rhinoceros', 'Sheep', 'Squirrel', 'Tiger', 'Walrus', 'Weasel', 'Wolf', 'Zebra']
 
-colors = ['Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Indigo', 'Purple']
+colors = ['Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Indigo', 'Purple','Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Indigo', 'Purple','Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Indigo', 'Purple','Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Indigo', 'Purple','Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Indigo', 'Purple','Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Indigo', 'Purple','Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Indigo', 'Purple','Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Indigo', 'Purple']
 
 list_length_mammals = len(mammals)
 list_length_reptiles = len(reptiles)
@@ -44,15 +44,15 @@ def setTargetList(str):
     list_length_colors = len(colors)
 
 def BuildQuestionAndAnswerList(itx):
-    rRightList = random.sample(target_list,itx)
-    for i in range(0,itx): # to make enough color element for target_list 이게 없으면 애러난다. itx 가 컬러 수보다 커지기 때문이다.
-        colors.extend(colors)
-        
-    rRightColors = random.sample(colors,itx)
+    print('ITX')
+    print(itx)
+    rRightList = random.sample(target_list,itx)      
+    rRightColors = random.sample(colors,1)
     rRightLogic = []
     for i in range(0,itx):#수만큼 true 를 넣어준다.
         rRightLogic.append(True)
-
+        rRightColors.append(random.sample(colors,1))
+        
     rWrongLogic = []
     rWrongList = random.sample(target_list,1)
     rWrongColors = random.sample(colors,1)
@@ -115,12 +115,15 @@ def print_Question(qests,clrs, lgc):
 ###============================###
 def testStart():   
     global NextQuestionLength
+    
+    target_list.clear()#list reset 
     ChangeSpecies()
     print(target_list)
     print("Start")
+    print(NextQuestionLength)
     showQuestionAndAnswer(NextQuestionLength)
-    # 버튼 배치
-    #update_status('testing')
+    update_status('testing')
+
 def nullCommand():
     print("nullcommand")
     
@@ -214,7 +217,7 @@ def checkWhetherGoOrStop():
     beReadyForTest() # set initialization
     global trialLeft
     if trialLeft > 0: goFuther()
-    if trialLeft == 0: stop_test()
+   # if trialLeft == 0: stop_test()
     
 def decreaseTrialNumber():
     global trialLeft
@@ -223,11 +226,13 @@ def decreaseTrialNumber():
     stopToGo.config(text = out)
     
 def wrongAnswer():
+    print("wrongAnswer")
     decreaseTrialNumber()
     checkWhetherGoOrStop()
     
 def rightAnswer():
-    stopToGo.config(text = 'Correct')
+    global NextQuestionLength
+    stopToGo.config(text = NextQuestionLength)
     checkWhetherGoOrStop()
     
 
