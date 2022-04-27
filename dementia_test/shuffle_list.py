@@ -1,9 +1,36 @@
 ####==========================================================#####
 #### Coded by Soomin Lee, collaborated with Taeryong Lee======#####
 #### By presenting longer words list, user feel difficulties to screen out what is not shown; ======#####
-#### The name and color is mixed together  ======#####
+#### The name and color is mixed together  ===================#####
+#### If we feels difficulties to screen out Now Showing Words with designated color===========#####
+#### it is to be believed that we are found to be close to dementia ==========================#####
+#### This simple python app show the diagnostic procedures ===========########
 #### We call it 'Dementia Test' ==============================#####
+
+#### Caution
+### it is not a proven test at all from any remotely distant aspects
+#### Caution
+
 #### =========================================================#####
+
+
+### IMPORTANT ######################################################
+
+### Collaborator part is indicated as collaborator
+### Collaborator part is indicated as Collaborator Help
+### Collaborator part is indicated as stackoverflow for reference
+
+### rest of them, AP Student Soomin Lee coded
+### IMPORTANT ######################################################
+
+
+
+### Code Begin ###
+### Code Begin ###
+### Code Begin ###
+### Code Begin ###
+### Code Begin ###
+### Code Begin ###
 
 
 import tkinter as tk
@@ -506,8 +533,9 @@ exit_button.pack()# pack
 ## tkinter Close Dementia Test ===========##
     
 root.mainloop()
-    
 
-
-
-
+### Code End ###
+### Code End ###
+### Code End ###
+### Code End ###
+### Code End ###
