@@ -310,7 +310,7 @@ def update_question(Qset, Qnum, itx, ans ): #
     question_Label.config(text = questionName) # Showing word only  
     question_Label.config(bg = colors) # Show the background color 
     Qnum = Qnum + 1 # 2nd Key
-    id = root.after(1500, update_question, Qset, Qnum, itx, ans) # update next words after 1500 miliseconds
+    id = root.after(100, update_question, Qset, Qnum, itx, ans) # update next words after 1500 miliseconds
     if Qnum > itx : # check whether key number exceeds the many words (itx); it means every words shows ; Showing question is done
         root.after_cancel(id) # no more repeating function execution
         question_Label.config(text = 'Click~!') # sign changed
@@ -471,7 +471,7 @@ def openNewWindow(level_str):
     result_popup = Toplevel(root)# above root, showing popup
     result_popup.title("Dementia Test Result")
     result_popup.geometry("400x400")
-    result_popup.config(font=("Arial",25))
+    #result_popup.config(font=("Arial",25))
     
     # determine the Dementia by Level<- switcher 
     textLines = {
@@ -491,7 +491,7 @@ def openNewWindow(level_str):
     text_result = 'Your test result is\n'    
     text_result += str(level_str)
     text_result += '\n'+result
-    text_result += '\nSoomin\'s Board supports test result STRONGLY'  
+    #text_result += '\nSoomin\'s Board supports test result STRONGLY'  
     
     pLable = Label(result_popup) # showing result on label
     pLable.config(text = text_result)
